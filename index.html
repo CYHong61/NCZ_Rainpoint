@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>레인 포인트 · 빗물이용시설 사용 실적을 재고 증명합니다</title>
+<meta name="description" content="빗물이용시설의 사용량을 센서로 자동 기록하고, 이상을 알리고, 법정 기록과 지자체 점검표를 만들어 주는 서비스 데모">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="brand" data-go="home">레인 포인트<small>Rain Point</small></div>
+  <nav id="nav"></nav>
+  <div class="role" id="roleSeg" title="화면 보기 대상"></div>
+</div></header>
+
+<main>
+<!-- 홈 -->
+<section id="tab-home" class="tab">
+  <div class="hero">
+    <div class="eyebrow">2026 대한민국 물산업 혁신 창업대전 · 아이디어 부문(물이용) · 팀 늙치즈</div>
+    <h1>빗물이용시설의 사용 실적을<br>센서로 재고 증명합니다</h1>
+    <p class="lead">사용량을 자동으로 기록하고, 시설별 정상 기준과 비교해 이상을 알리고, 법이 요구하는 기록과 지자체 점검표를 대신 만들어 줍니다.</p>
+    <div class="roles">
+      <button class="rolecard" data-role="admin"><b>시설 관리자로 보기</b><span>내 시설의 이상 진단 · 법정 기록 출력 · 운영 추천 · ESG 리포트</span></button>
+      <button class="rolecard gov" data-role="gov"><b>지자체로 보기</b><span>관할 시설 이상 현황 · 시설 지도 · 점검표 자동 작성</span></button>
+    </div>
+    <p class="note" style="margin-top:10px">같은 데이터를 보는 사람에 따라 필요한 화면만 보여 줍니다. 위 메뉴 오른쪽에서 언제든 바꿀 수 있습니다.</p>
+  </div>
+  <h2>빗물이용시설은 법으로 만들게 했지만, 만든 뒤 얼마나 쓰는지는 확인되지 않습니다</h2>
+  <div class="grid g4" id="homeStats"></div>
+  <p class="note" id="homeStatNote"></p>
+  <h2>이렇게 작동합니다</h2>
+  <div class="flow">
+    <div class="f1"><b>① 측정</b>저류조 수위와 배관 유량을 센서가 자동으로 측정</div>
+    <div class="f2"><b>② 기록</b>사용량을 법정 항목·형식에 맞춰 3년 보존</div>
+    <div class="f3"><b>③ 진단</b>시설별 정상 기준선과 비교해 이상 알림</div>
+    <div class="f4"><b>④ 증빙</b>점검표와 실적 리포트를 자동 작성</div>
+  </div>
+  <h2>핵심 기술 세 가지</h2>
+  <div class="grid g3">
+    <div class="card"><h3>① 자동 계측·법정 기록</h3><p>수위와 유량 센서로 사용량을 재고, 시행규칙이 요구하는 항목(사용량·누수·점검·청소)을 3년 보존합니다. 지자체 점검표 항목도 자동으로 채웁니다.</p></div>
+    <div class="card"><h3>② 시설별 기준선 이상 진단</h3><p>강우와 시설 조건으로 "정상이면 이만큼 쓴다"는 기준선을 만들고 실제 값과 비교합니다. 사용 중단과 사용량 감소는 거의 놓치지 않습니다(시뮬레이션).</p></div>
+    <div class="card"><h3>③ 물수지 기반 운영·설계 추천</h3><p>지붕에서 들어오는 빗물과 사용 수요를 계산해 저류조 운영과 설계를 추천합니다. 수요가 한계인 시설은 저류조를 키워도 이용률이 늘지 않습니다.</p></div>
+  </div>
+  <h2>법이 요구하는 것과 우리 서비스가 하는 일</h2>
+  <div class="tw"><table id="lawTable"></table></div>
+  <div class="box warn" style="margin-top:14px"><b>방향을 바꾼 이유.</b> 처음에는 주민에게 포인트를 주는 앱을 구상했지만, 하루 1㎥를 쓰는 시설이 아끼는 물값이 연 26만~55만 원 수준이라 주민에게 돌려줄 재원이 작았습니다. 그래서 이미 기록·점검에 돈을 쓰는 <b>시설 관리자</b>를 위한 서비스로 바꿨습니다.</div>
+</section>
+
+<!-- 지도 -->
+<section id="tab-fleet" class="tab">
+  <div class="eyebrow">지자체용 · 관할 시설 현황</div>
+  <h1>관할 시설의 이상 현황을 한눈에 봅니다</h1>
+  <span class="badge b-sim">시뮬레이션 데이터(실제 측정값 아님)</span>
+  <p class="lead">가상 시설 12곳의 5~10월 사용량을 시설별 기준선과 비교한 결과입니다. 이상 의심 시설부터 정렬해 점검 우선순위를 정할 수 있습니다. 시설 이름·위치는 모두 가상입니다.</p>
+  <div class="grid g4" id="fleetStats"></div>
+  <div class="seg" id="fleetSeg"></div>
+  <div class="card" style="padding:0;overflow:auto"><table id="fleetTable"></table></div>
+  <p class="note">판정 규칙은 시설 상세 화면과 같습니다(월 사용량 ÷ 기대치가 0.835 미만이면 의심, 두 달 연속이면 이상). 법정·비법정 구분과 유량계 설치 여부는 데이터가 없어 가정한 값입니다. 누수는 사용량만으로 탐지가 어려워 이 표에서 놓칠 수 있습니다.</p>
+</section>
+
+<section id="tab-map" class="tab">
+  <div class="eyebrow">시설 지도</div>
+  <h1>서울 8개 구 빗물이용시설 분포</h1>
+  <p class="lead">서울시 공간정보(2022.4) 기준 8개 구 472곳입니다. 위치와 등록번호만 있어 건물 용도와 용량은 알 수 없습니다.</p>
+  <div class="seg" id="guSeg"></div>
+  <label style="display:inline-block;margin-left:10px"><input type="checkbox" id="ptToggle"> 시설 위치 점 표시</label>
+  <div class="row">
+    <div class="col" style="flex:2 1 520px"><div class="card" style="padding:8px"><svg id="mapSvg" viewBox="0 0 1500 1033" style="width:100%;height:auto"></svg>
+      <div class="legend" id="mapLegend"></div></div></div>
+    <div class="col" style="flex:1 1 280px">
+      <div class="card" id="dongDetail"><h3>동을 선택하세요</h3><p class="note">지도의 동을 누르면 건축면적, 세대수, 시설 수가 표시됩니다.</p></div>
+      <div class="card" style="margin-top:12px"><h3>구별 시설 수</h3><div id="guBars"></div></div>
+      <div class="card" style="margin-top:12px"><h3>시설이 많은 동 Top 10</h3><ol class="rank" id="topDongs"></ol></div>
+    </div>
+  </div>
+  <div class="box warn" style="margin-top:14px">건축면적은 건축HUB 건축물대장(2026.8 기준) 표제부 값이며 실제 지붕 집수면적이나 시설 용량이 아닙니다. 법정/비법정 구분, 센서 설치 여부는 아직 데이터에 없어 시범 단계에서 추가할 항목입니다.</div>
+</section>
+
+<!-- 시설 상세 -->
+<section id="tab-detail" class="tab">
+  <div class="eyebrow">시설 상세 · 이상 진단</div>
+  <h1>시설 한 곳의 사용량을 기준선과 비교합니다</h1>
+  <p><span class="badge b-sim">시뮬레이션 데이터 (실제 측정값 아님)</span></p>
+  <p class="lead" id="facInfo"></p>
+  <div class="seg" id="scSeg"></div>
+  <div class="row">
+    <div class="col" style="flex:2 1 560px"><div class="card"><h3>일별 저류조 수위와 강우 (2025.5~10)</h3><div id="levelChart"></div>
+      <div class="legend"><span><i style="background:#9aa7b5"></i>정상 시설 수위</span><span><i style="background:var(--mid)" id="selColor"></i><span id="selName"></span></span><span><i style="background:#b7d3ee"></i>일 강우(위에서 아래로)</span></div></div></div>
+    <div class="col" style="flex:1 1 300px"><div class="card"><h3>월별 상태</h3><div id="monthBadges"></div></div>
+      <div class="card" style="margin-top:12px"><h3>알림</h3><div id="alerts"></div></div></div>
+  </div>
+  <div class="card" style="margin-top:12px"><h3>월별 사용량: 실제와 기대치 비교 (㎥)</h3><div id="monthChart"></div>
+    <div class="legend"><span><i style="background:#c9d3de"></i>기대 사용량</span><span><i style="background:var(--mid)"></i>실제(정상 범위)</span><span><i style="background:var(--red)"></i>실제(기준 미만)</span></div>
+    <p class="note">판정 규칙: 월 사용량 ÷ 기대치가 <b>0.835</b> 미만이면 의심, 두 달 연속이면 이상으로 표시합니다. 이 기준은 정상 월의 하위 5% 수준이며, 정상 시설의 월 오경보는 4.4%, 두 달 연속 규칙을 쓰면 0.14%입니다(시뮬레이션).</p></div>
+  <h2>시뮬레이션 검증 결과</h2>
+  <p class="note">서울 기상청 ASOS 시간 강우(2015~2025)와 가정 모형(지붕 1,000㎡, 저류조 50㎥, 하루 수요 2㎥, 변동 계수 0.5). 실측이 아닙니다.</p>
+  <div class="tw"><table id="detTable"></table></div>
+  <div class="row" style="margin-top:12px">
+    <div class="col"><div class="card"><h3>기준선이 틀리면 오경보가 얼마나 늘까</h3><div id="baseChart"></div><p class="note">실제 사용량이 예상과 다를 때 정상 월의 오경보 비율(경보 기준 5% 고정). 그래서 시범에서 시설별 실측으로 기준선을 보정해야 합니다.</p></div></div>
+    <div class="col"><div class="card"><h3>꼭 알아야 할 한계</h3><ul id="simLimits"></ul>
+      <p class="note">누수는 사용량만 보면 잘 놓칩니다. 시연의 "누수" 시나리오가 6월에 한 번 의심으로 뜨고 이후 정상 범위로 돌아오는 것도 이 때문에 수위 추이를 함께 봐야 합니다.</p></div></div>
+  </div>
+</section>
+
+<!-- 법정 기록 -->
+<section id="tab-record" class="tab">
+  <div class="eyebrow">법정 기록 출력</div>
+  <h1>사용량 기록을 자동으로 만들고 3년 보존합니다</h1>
+  <p><span class="badge b-sim">시뮬레이션 데이터</span> <span class="badge b-gray">필드는 초안 (정식 서식 확인 전)</span></p>
+  <p class="lead">물 재이용법 시행규칙이 요구하는 사용량·누수·점검·청소 기록을 센서 값으로 채웁니다. 점검 결과와 청소 일자는 센서가 알 수 없어 담당자가 입력합니다.</p>
+  <div class="noprint"><div class="seg" id="recScSeg"></div>
+  <div class="seg" id="recMonthSeg"></div>
+  <div class="btns" style="margin:6px 0 12px"><button class="btn small" id="csvBtn">CSV 내보내기</button><button class="btn small alt" id="printRec">인쇄</button></div></div>
+  <div class="tw"><table id="recTable"></table></div>
+  <p class="note">보존 만료일은 기록일로부터 3년입니다. 이상 의심 열은 해당 월 전체 판정을 표시합니다.</p>
+</section>
+
+<!-- 점검표 -->
+<section id="tab-inspect" class="tab">
+  <div class="eyebrow">지자체 점검표 자동 작성</div>
+  <h1>점검표가 묻는 항목을 센서 데이터로 채웁니다</h1>
+  <p><span class="badge b-sim">시뮬레이션 데이터</span> <span class="badge b-gray">성남시 2026 과업지시서 붙임2 항목 기준</span></p>
+  <div class="row">
+    <div class="col"><div class="card">
+      <div class="field"><label>시설명</label><input type="text" value="시연 시설 (가상)" style="width:100%"></div>
+      <div class="field"><label>구분 (성남 207곳 중 빗물이용시설 146곳: 법정 15, 비법정 131)</label><select><option>법정 시설</option><option>비법정 시설</option></select></div>
+      <div class="field"><label>소유 기관</label><input type="text" placeholder="예: 성남시 수정구보건소" style="width:100%"></div>
+    </div></div>
+    <div class="col"><div class="card"><h3>자동 확인 항목</h3>
+      <p><span class="badge b-ok">자동</span> 유량계 설치 여부: <b>설치됨</b> (센서 구성 정보)</p>
+      <p><span class="badge b-ok">자동</span> 사용량 기록 3년 보존 여부: <b>보존 중</b> (보존 만료일 관리)</p>
+      <p class="note">업무지침(2024.11)은 지자체가 유량계 설치를 권장할 수 있다고 합니다(원문 확보 필요).</p></div></div>
+  </div>
+  <h2>월별 빗물이용량 (㎥)</h2>
+  <div class="seg noprint" id="insScSeg"></div>
+  <div class="tw"><table id="insTable"></table></div>
+  <p class="note">시연 데이터는 5~10월 6개월이며, 나머지 월은 실제 운영에서 센서가 채웁니다.</p>
+  <div class="row"><div class="col"><div class="field"><label>현장 점검 의견 (직접 입력)</label><textarea></textarea></div></div>
+  <div class="col"><div class="field"><label>청소 이력 (직접 입력)</label><textarea></textarea></div></div></div>
+  <div class="btns noprint"><button class="btn small alt" id="printIns">인쇄</button></div>
+</section>
+
+<!-- 운영 추천 -->
+<section id="tab-operate" class="tab">
+  <div class="eyebrow">운영 추천</div>
+  <h1>비 예보에 맞춰 저류조 운영을 판단합니다</h1>
+  <p class="lead">유입량 = 강수 × 집수면적 × 0.85. 실서비스는 기상청 단기예보와 수위 센서를 연동하며, 데모에서는 값을 직접 입력합니다.</p>
+  <div class="row">
+    <div class="col"><div class="card">
+      <div class="field"><label>지붕 집수면적 (㎡)</label><input type="number" id="opArea" value="1000" min="10" step="10"></div>
+      <div class="field"><label>저류조 용량 (㎥)</label><input type="number" id="opTank" value="50" min="1"></div>
+      <div class="field"><label>현재 수위 (%)</label><input type="number" id="opLevel" value="60" min="0" max="100"></div>
+      <div class="field"><label>하루 평균 사용량 (㎥)</label><input type="number" id="opUse" value="2" min="0" step="0.5"></div>
+      <div class="field"><label>예보 강수량 (mm): <b id="opRainV">40</b></label><input type="range" id="opRain" min="0" max="150" value="40" style="width:100%"></div>
+    </div></div>
+    <div class="col"><div class="card" id="opOut"></div></div>
+  </div>
+  <h2>서울은 비가 여름에 몰립니다</h2>
+  <div class="card"><div id="rainChart"></div><p class="note">기상청 서울 평년값(1991~2020, 연 1,417.9mm).</p></div>
+  <h2>시뮬레이션이 알려 주는 것</h2>
+  <div class="grid g3">
+    <div class="card soft"><h3>이용률은 수요가 정합니다</h3><p>하루 1㎥ 수요를 가정하면 사용량은 모을 수 있는 빗물의 약 25%였습니다. 수요가 정해져 있으면 저류조를 키워도 이용률은 거의 늘지 않았습니다.</p></div>
+    <div class="card soft"><h3>사전 방류는 시기만 옮깁니다</h3><p>비 오기 전에 물을 비워도 총 사용량은 그대로였습니다. 이 기능은 이용률이 아니라 하수·침수 부담 완화 관점에서 설명해야 합니다.</p></div>
+    <div class="card soft"><h3>그래서 먼저 쓰는지 잰다</h3><p>모은 물이 쓰이지 않으면 이용률은 낮습니다. 사용량을 재는 것이 운영·설계 판단의 출발점입니다.</p></div>
+  </div>
+  <p class="note">위 결과는 가정 모형(시뮬레이션)입니다. 이용률 실험(하루 수요 1㎥)과 이상 진단 실험(하루 수요 2㎥)은 서로 다른 실행입니다.</p>
+</section>
+
+<!-- 사업 구조 -->
+<section id="tab-biz" class="tab">
+  <div class="eyebrow">서비스·사업 구조</div>
+  <h1>1·2·3차로 나눠 현실적으로 넓혀 갑니다</h1>
+  <div class="steps">
+    <div class="card stage"><h3>1차 · 2027 공공 시설 시범</h3><dl>
+      <dt>고객</dt><dd>서울시 지원 학교, 성남시 소유 법정 시설, DDP 등 공공 시설</dd>
+      <dt>하는 일</dt><dd>센서 설치, 사용량 자동 기록, 기준선 비교, 월간 리포트</dd>
+      <dt>재원</dt><dd>매출이 목표가 아님. 개발비는 지원금, 시범은 무상 또는 소액</dd>
+      <dt>넘어갈 조건</dt><dd>실측 3개월, 인정받는 단가, 실측 원가</dd></dl></div>
+    <div class="card stage s2"><h3>2차 · 2028~29 용역 제휴</h3><dl>
+      <dt>고객</dt><dd>지자체 점검 용역을 맡은 등록 업체와 시설 소유자</dd>
+      <dt>하는 일</dt><dd>용역의 계측·기록·점검표 작성 부분을 모듈로 공급</dd>
+      <dt>돈 버는 방법</dt><dd>센서는 시설 소유자 예산·설치비 지원으로 판매, 점검표 자동 작성은 업체에 구독(소액)</dd>
+      <dt>넘어갈 조건</dt><dd>제휴 업체 1곳 이상, 소유자 구매 1건 이상</dd></dl></div>
+    <div class="card stage s3"><h3>3차 · 2030~ 확장</h3><dl>
+      <dt>고객</dt><dd>위탁관리사를 통한 공동주택, 물순환·LID 모니터링 발주 기관, 타 시·도</dd>
+      <dt>하는 일</dt><dd>단지 구독, 물순환 모니터링, 호우 대비 모듈, 실적 리포트</dd>
+      <dt>돈 버는 방법</dt><dd>구독, 모니터링 입찰(도시당 연 1억 원대 사례), 데이터 리포트</dd>
+      <dt>넘어갈 조건</dt><dd>시설 100곳 안팎(가정), 입찰 자격 확보</dd></dl></div>
+  </div>
+  <h2>누가 무엇에 돈을 내나</h2>
+  <div class="tw"><table>
+    <tr><th>지불 주체</th><th>무엇에 내나</th><th>한계</th></tr>
+    <tr><td>시설 소유자</td><td>센서 설치(1회)와 기록·진단 구독</td><td>유지관리에 이미 쓰는 돈 안에서 계측·기록 몫이 나와야 함. 지침은 유량계 설치를 "권장"하는 수준</td></tr>
+    <tr><td>점검 용역 업체</td><td>점검표 자동 작성 모듈 구독</td><td>줄어드는 점검 인건비 안에서만 낼 수 있어 소액</td></tr>
+    <tr><td>지자체</td><td>데이터 활용(직접 구매 근거는 약함)</td><td>점검은 용역으로 위탁함</td></tr>
+  </table></div>
+  <div class="box warn" style="margin-top:14px">판매 가격은 시범 이후에 정합니다. 현재 사업자는 만들지 않았고, 시범은 지원금으로 진행하는 단계입니다.</div>
+  <h2>확인된 사례</h2>
+  <div class="grid g3" id="caseCards"></div>
+  <h2>아직 확인하지 못한 것</h2>
+  <ul id="unknownList"></ul>
+</section>
+
+<!-- ESG -->
+<section id="tab-esg" class="tab">
+  <div class="eyebrow">ESG 리포트</div>
+  <h1>빗물 이용 실적을 측정되는 숫자로 보여 줍니다</h1>
+  <div class="grid g3" id="esgCards"></div>
+  <h2>시설 월간 리포트 샘플</h2>
+  <p><span class="badge b-sim">시뮬레이션 데이터</span></p>
+  <div class="seg" id="esgScSeg"></div>
+  <div class="grid g4" id="esgStats"></div>
+  <h2>ESG 빗물 크레딧은 단계별 가설입니다</h2>
+  <div class="tw"><table id="creditTable"></table></div>
+  <p class="note">관련 SDGs: 6(깨끗한 물과 위생), 11(지속가능한 도시), 13(기후변화 대응). 크레딧 거래(4단계)는 국내 인정 기준과 시장을 확인하지 못해 수익 계획에 넣지 않았습니다.</p>
+</section>
+</main>
+
+<footer>
+  <hr>
+  <p><b>데이터 출처</b> 국회법률정보시스템(물 재이용법 시행규칙·시행령), 성남시 2026 물 재이용시설 관리 및 기술지원 용역 과업지시서, 한국건설기술연구원 외(2022), 서울 열린데이터광장 빗물이용시설 공간정보(2022.4), 건축HUB 건축물대장(2026.8), 기상청 서울 평년값·ASOS.</p>
+  <p><b>한계</b> 이 사이트의 시설 상세·시뮬레이션 수치는 가정 모형으로 만든 값이며 실제 측정값이 아닙니다. 법정 기록·점검표 필드는 초안입니다. 2026 대한민국 물산업 혁신 창업대전 아이디어 부문 · 팀 늙치즈 · 경희대학교 환경학및환경공학과</p>
+</footer>
+<div class="tip" id="tip"></div>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
