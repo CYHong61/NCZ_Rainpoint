@@ -277,10 +277,56 @@ main{padding-bottom:70px}
 .cloud span{position:absolute;left:0;right:0;top:46px;text-align:center;font-weight:800;font-size:13.5px;line-height:1.4;color:var(--navy)}
 @media(prefers-reduced-motion:reduce){.cloud{animation:none}}
 @media(max-width:900px){.cloud{right:-20px;top:-6px;width:210px;height:123px}.cloud span{top:38px;font-size:12px}}
-.cloud{right:-120px;top:-8px}@media(max-width:900px){.cloud{right:-20px;top:-6px}}
+
 
 .cta2 .cbtn.gov{background:linear-gradient(135deg,#1b3a5c,#2e75b6);box-shadow:0 10px 22px rgba(27,58,92,.22)}
 .cta2 .cbtn.adm{background:linear-gradient(135deg,#4fb0ea,#2e86d4);box-shadow:0 10px 22px rgba(46,134,212,.28)}
 .cta2 .cbtn{transition:transform .15s}.cta2 .cbtn:hover{transform:translateY(-2px)}
 .textlink.pilllink{display:inline-block;margin:2px 0 16px;padding:8px 18px;border-radius:999px;background:#fff;border:1.5px solid #cfe3f7;color:var(--mid);box-shadow:0 4px 12px rgba(46,117,182,.10);text-decoration:none}
 .textlink.pilllink:hover{background:#eaf3fc;text-decoration:none}
+
+/* ===== 홈 톤 통일(연한 하늘색 + 남색) ===== */
+:root{--sky:#3a8fd8;--sky2:#eaf3fc;--sky3:#d3e7f8}
+html{background:#f6f9fd linear-gradient(180deg,#eaf4fd 0,#f6f9fd 520px) no-repeat fixed}body{background:transparent}
+tr.hl td,tr.sel td,td.hl{background:#eaf3fc!important}
+.card{border:1px solid #dbe9f6;box-shadow:0 6px 18px rgba(46,117,182,.07);border-radius:18px}
+.stat b{color:var(--sky)}
+.stat.navy b{color:var(--navy)}
+th{background:#e3effb;color:var(--navy);border-color:#d3e4f4}
+td{border-color:#e4eef8}
+.tw{border-radius:16px;overflow:hidden}
+.flow div{background:#fff!important;color:var(--navy);border:1px solid #d3e7f8;box-shadow:0 6px 16px rgba(46,117,182,.08);border-radius:18px;padding:18px 16px;text-align:center;font-size:14px}
+.flow div i{display:flex;width:46px;height:46px;border-radius:50%;background:#eaf3fc;align-items:center;justify-content:center;font-style:normal;font-size:22px;margin:0 auto 8px}
+.flow div b{font-size:18px;color:var(--sky)}
+.seg button{border-color:#cfe3f7;color:var(--navy)}
+.seg button.on{background:linear-gradient(135deg,#1b3a5c,#2e75b6);border-color:transparent}
+.b-sim{background:#fff;color:#5f7f9c;border:1px solid #cfe3f7}
+.btn{background:linear-gradient(135deg,#1b3a5c,#2e75b6);border:0}
+details.more{margin-top:22px;background:#fff;border:1px solid #dbe9f6;border-radius:18px;padding:6px 20px 18px}
+details.more>summary{cursor:pointer;font-weight:800;color:var(--sky);padding:12px 0;list-style:none}
+details.more>summary::before{content:"＋ ";}
+details.more[open]>summary::before{content:"－ ";}
+details.more h2{font-size:18px}
+h1{font-size:30px}
+
+/* 말풍선: 항상 마스코트 영역 안(화면 밖으로 나가지 않음) */
+.heroh2 .mascot{flex:0 0 440px;width:440px;max-width:100%;align-items:flex-start}
+.heroh2 .mascot img.mimg,.heroh2 .mascot>img{margin-left:20px}
+.mascot .blob{left:145px;margin-left:-165px}
+.cloud{right:0!important;left:auto;top:-4px!important;width:210px!important;height:123px!important}
+.cloud span{top:38px!important;font-size:12.5px!important}
+@media(max-width:900px){.heroh2 .mascot{flex:none;width:100%;max-width:340px;margin:0 auto;align-items:center}.heroh2 .mascot>img{margin-left:0}.mascot .blob{left:50%;margin-left:-150px;width:300px;height:300px}.cloud{right:0!important;top:-14px!important;width:170px!important;height:100px!important}.cloud span{top:30px!important;font-size:11px!important}}
+html,body{overflow-x:hidden}
+/* 캐릭터 */
+.ph{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}
+.ph .pt{flex:1 1 auto;min-width:0}
+.ch{display:block;filter:drop-shadow(0 8px 10px rgba(46,117,182,.18))}
+.ph .phimg{height:150px;width:auto;flex:none;margin-bottom:-4px}
+.flow div .fi{width:74px;height:74px;object-fit:contain;margin:0 auto 6px;filter:none}
+.side{height:130px;width:auto;margin:6px auto 0}
+.road .card{text-align:center;position:relative;padding-top:26px}
+.road .rimg{height:120px;width:auto;margin:0 auto 8px}
+.road .yr{position:absolute;top:12px;left:14px;background:#eaf3fc;color:var(--sky);font-weight:800;font-size:12.5px;border-radius:999px;padding:3px 10px}
+.road .stage h3{margin:6px 0}
+@media(max-width:700px){.ph .phimg{height:90px}}
+.ph{margin-bottom:16px}.ph .phimg{margin-bottom:0}

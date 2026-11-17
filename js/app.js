@@ -4,7 +4,7 @@ var R=window.RP, F=R.facts, DEMO=R.demo, SIM=R.sim;
 var $=function(id){return document.getElementById(id)};
 var fmt=function(n,d){return Number(n).toLocaleString('ko-KR',{maximumFractionDigits:d==null?0:d,minimumFractionDigits:d||0})};
 var SCN={normal:'정상',stop:'사용 중단 (7월~)',half:'수요 반감 (7월~)',leak1:'누수 1.0㎥/일'};
-var SCC={normal:'#2e75b6',stop:'#c0392b',half:'#d96c2b',leak1:'#7a4fb5'};
+var SCC={normal:'#3a8fd8',stop:'#e5645a',half:'#f0a94b',leak1:'#8d86d9'};
 var THR=DEMO.meta['경보기준_월사용량_대비_기대치'];
 var state={sc:'normal',recMonth:7,gu:'전체',dong:null,fleetF:'전체'};
 
@@ -68,12 +68,12 @@ function renderHome(){
   var h='';
   ids.forEach(function(id,i){var p=ps[id];h+='<div class="card stat'+(i===3?' navy':'')+'"><b>'+fmt(p.value)+p.unit+'</b><span>'+labels[id]+'</span>'+(p.status!=='확인'?'<em>원 출처 확인 중</em>':'')+'</div>'});
   $('homeStats').innerHTML=h;
-  $('homeStatNote').textContent='출처: 환경부 하수도 통계(2016)·한국건설기술연구원 외(2022), 성남시 2026 과업지시서. 2021·2022 시설 수는 환경부 하수도통계 10-3 빗물이용시설현황 시설별 자료를 직접 집계한 값입니다. 쓰지 않는 이유 1위는 "필요할 때 저류조 물이 부족", 2위는 "운영비 부담"입니다.';
-  var t='<tr><th>법이 요구하는 것</th><th>우리 서비스가 하는 일</th><th>확인 수준</th></tr>';
-  t+='<tr><td>빗물 사용량 기록 (물 재이용법 시행규칙)</td><td>센서로 자동 기록해 3년 보존. 전자적 방법으로 기록·보존할 수 있음</td><td>원문 확인(국회법률정보시스템)</td></tr>';
-  t+='<tr><td>누수·점검·청소 기록</td><td>이상 진단으로 의심 구간을 표시, 점검·청소 날짜는 담당자가 입력</td><td>센서만으로 대체되지 않음</td></tr>';
-  t+='<tr><td>과태료 (시행령 별표 2)</td><td>시설기준 위반 등 150만 원(반복 시 200만·300만), 자료 제출 거부·거짓 500만~1,000만 원</td><td>원문 확인. "기록 미이행" 전용 항목과 부과 사례는 확인하지 못함</td></tr>';
-  t+='<tr><td>지자체 점검표 (성남 2026)</td><td>월별 빗물이용량 12개월, 유량계 설치 여부, 기록 3년 보존 여부를 자동으로 채움</td><td>과업지시서 확인</td></tr>';
+  $('homeStatNote').textContent='출처: 환경부 하수도 통계, 한국건설기술연구원 외(2022), 성남시 2026 과업지시서';
+  var t='<tr><th>법이 요구하는 것</th><th>우리 서비스가 하는 일</th></tr>';
+  t+='<tr><td>빗물 사용량 기록 (물 재이용법 시행규칙)</td><td>센서로 자동 기록해 3년 보존. 전자적 방법으로 기록·보존할 수 있음</td></tr>';
+  t+='<tr><td>누수·점검·청소 기록</td><td>이상 진단으로 의심 구간을 표시, 점검·청소 날짜는 담당자가 입력</td></tr>';
+  t+='<tr><td>과태료 (시행령 별표 2)</td><td>시설기준 위반 등 150만 원(반복 시 200만·300만), 자료 제출 거부·거짓 500만~1,000만 원</td></tr>';
+  t+='<tr><td>지자체 점검표 (성남 2026)</td><td>월별 빗물이용량 12개월, 유량계 설치 여부, 기록 3년 보존 여부를 자동으로 채움</td></tr>';
   $('lawTable').innerHTML=t;
 }
 
@@ -92,9 +92,9 @@ function renderMap(){
   });
   svg+='</g>';
   R.geo.gus.forEach(function(g){svg+='<path d="'+g.d+'" fill="none" stroke="#1b3a5c" stroke-width="1.6" pointer-events="none" opacity="'+((state.gu==='전체'||state.gu===g.gu)?.9:.2)+'"/>'});
-  if($('ptToggle').checked){R.pts.forEach(function(p){svg+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#d96c2b" stroke="#fff" stroke-width="1" pointer-events="none"/>'})}
+  if($('ptToggle').checked){R.pts.forEach(function(p){svg+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="4" fill="#ef7b6f" stroke="#fff" stroke-width="1" pointer-events="none"/>'})}
   $('mapSvg').innerHTML=svg;
-  $('mapLegend').innerHTML=BINS.map(function(b){return '<span><i style="background:'+b[2]+'"></i>'+b[1]+'</span>'}).join('')+($('ptToggle').checked?'<span><i style="background:#d96c2b;border-radius:50%"></i>시설 위치</span>':'');
+  $('mapLegend').innerHTML=BINS.map(function(b){return '<span><i style="background:'+b[2]+'"></i>'+b[1]+'</span>'}).join('')+($('ptToggle').checked?'<span><i style="background:#ef7b6f;border-radius:50%"></i>시설 위치</span>':'');
   var tip=$('tip');
   $('mapSvg').querySelectorAll('path[data-k]').forEach(function(p){
     p.onmousemove=function(e){var s=dstat[p.dataset.k];tip.style.display='block';tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';tip.textContent=p.dataset.k.replace('|',' ')+' · '+(s?s['빗물이용시설수']:0)+'곳'};
@@ -127,7 +127,7 @@ function levelChart(){
   D.forEach(function(d,i){var h=d.rain_mm/maxR*70;if(h>0)s+='<rect x="'+(x(i)-1)+'" y="'+t+'" width="2.2" height="'+h+'" fill="#b7d3ee"/>'});
   [5,6,7,8,9,10].forEach(function(m){var i=D.findIndex(function(d){return +d.date.slice(5,7)===m&&d.date.slice(8)==='01'});if(i>=0){s+='<line x1="'+x(i)+'" x2="'+x(i)+'" y1="'+t+'" y2="'+(H-b)+'" stroke="#eef2f7"/><text x="'+(x(i)+3)+'" y="'+(H-8)+'" font-size="11" fill="#5f6b78">'+m+'월</text>'}});
   function path(key,col,dash){var p='';D.forEach(function(d,i){p+=(i?'L':'M')+x(i).toFixed(1)+','+y(d[key]).toFixed(1)});return '<path d="'+p+'" fill="none" stroke="'+col+'" stroke-width="'+(dash?1.5:2.2)+'"'+(dash?' stroke-dasharray="4 3"':'')+'/>'}
-  s+=path('normal_level','#9aa7b5',true);
+  s+=path('normal_level','#a9bdd2',true);
   if(sc!=='normal')s+=path(sc+'_level',SCC[sc],false);else s+=path('normal_level',SCC.normal,false);
   if(sc==='stop'||sc==='half'){var fi=D.findIndex(function(d){return d.date==='2025-07-01'});s+='<line x1="'+x(fi)+'" x2="'+x(fi)+'" y1="'+t+'" y2="'+(H-b)+'" stroke="#c0392b" stroke-dasharray="5 3"/><text x="'+(x(fi)+4)+'" y="'+(t+86)+'" font-size="11.5" fill="#c0392b" font-weight="700">7/1 이상 시작</text>'}
   s+='</svg>';
@@ -141,7 +141,7 @@ function monthChart(){
   var s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">';
   [0,.25,.5,.75,1].forEach(function(f){var v=mx*f;s+='<line x1="'+l+'" x2="'+(W-10)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e5ebf2"/><text x="'+(l-6)+'" y="'+(y(v)+4)+'" font-size="11" text-anchor="end" fill="#5f6b78">'+Math.round(v)+'</text>'});
   ms.forEach(function(m,i){
-    var x0=l+bw*i+bw*.14,w=bw*.34,col=m.alert?'#c0392b':'#2e75b6';
+    var x0=l+bw*i+bw*.14,w=bw*.34,col=m.alert?'#e5645a':'#3a8fd8';
     s+='<rect x="'+x0+'" y="'+y(m.expected_m3)+'" width="'+w+'" height="'+(y(0)-y(m.expected_m3))+'" fill="#c9d3de"/>';
     s+='<rect x="'+(x0+w+3)+'" y="'+y(m.actual_m3)+'" width="'+w+'" height="'+Math.max(0,y(0)-y(m.actual_m3))+'" fill="'+col+'"/>';
     s+='<text x="'+(x0+w+3+w/2)+'" y="'+(y(m.actual_m3)-5)+'" font-size="11.5" text-anchor="middle" font-weight="700" fill="'+col+'">'+(m.ratio==null?'':Math.round(m.ratio*100)+'%')+'</text>';
@@ -154,7 +154,7 @@ function baseChart(){
   var y=function(v){return t+(H-t-b)*(1-v/100)};
   var s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">';
   [0,25,50,75,100].forEach(function(v){s+='<line x1="'+l+'" x2="'+W+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e5ebf2"/><text x="'+(l-5)+'" y="'+(y(v)+4)+'" font-size="10.5" text-anchor="end" fill="#5f6b78">'+v+'</text>'});
-  keys.forEach(function(k,i){var v=d[k],x0=l+bw*i+bw*.15,w=bw*.7,col=(k==='0%')?'#2e8b57':'#d96c2b';
+  keys.forEach(function(k,i){var v=d[k],x0=l+bw*i+bw*.15,w=bw*.7,col=(k==='0%')?'#3fb6a8':'#8fc6ee';
     s+='<rect x="'+x0+'" y="'+y(v)+'" width="'+w+'" height="'+(y(0)-y(v))+'" fill="'+col+'"/><text x="'+(x0+w/2)+'" y="'+(y(v)-4)+'" font-size="11" text-anchor="middle" font-weight="700">'+Math.round(v)+'%</text><text x="'+(x0+w/2)+'" y="'+(H-10)+'" font-size="11" text-anchor="middle" fill="#5f6b78">'+k+'</text>'});
   s+='</svg>';$('baseChart').innerHTML=s;
 }
@@ -162,14 +162,14 @@ function rainChart(){
   var d=R.rain,W=900,H=220,l=40,t=16,b=26,bw=(W-l)/12,mx=Math.max.apply(null,d)*1.12,y=function(v){return t+(H-t-b)*(1-v/mx)};
   var s='<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">';
   [0,100,200,300,400].forEach(function(v){s+='<line x1="'+l+'" x2="'+W+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#e5ebf2"/><text x="'+(l-5)+'" y="'+(y(v)+4)+'" font-size="10.5" text-anchor="end" fill="#5f6b78">'+v+'</text>'});
-  d.forEach(function(v,i){var x0=l+bw*i+bw*.18,w=bw*.64;s+='<rect x="'+x0+'" y="'+y(v)+'" width="'+w+'" height="'+(y(0)-y(v))+'" fill="'+((i>=5&&i<=8)?'#2e75b6':'#9fc3e6')+'"/><text x="'+(x0+w/2)+'" y="'+(y(v)-4)+'" font-size="11" text-anchor="middle">'+v+'</text><text x="'+(x0+w/2)+'" y="'+(H-8)+'" font-size="11.5" text-anchor="middle" fill="#5f6b78">'+(i+1)+'월</text>'});
+  d.forEach(function(v,i){var x0=l+bw*i+bw*.18,w=bw*.64;s+='<rect x="'+x0+'" y="'+y(v)+'" width="'+w+'" height="'+(y(0)-y(v))+'" fill="'+((i>=5&&i<=8)?'#3a8fd8':'#bcdcf5')+'"/><text x="'+(x0+w/2)+'" y="'+(y(v)-4)+'" font-size="11" text-anchor="middle">'+v+'</text><text x="'+(x0+w/2)+'" y="'+(H-8)+'" font-size="11.5" text-anchor="middle" fill="#5f6b78">'+(i+1)+'월</text>'});
   s+='</svg>';$('rainChart').innerHTML=s;
 }
 
 /* ---------- 시설 상세 ---------- */
 function renderDetail(){
   var m=DEMO.meta['시설'];
-  $('facInfo').textContent='가상 시설: 지붕 '+fmt(m['지붕면적_m2'])+'㎡, 저류조 '+m['저류조_m3']+'㎥, 하루 평균 수요 '+m['하루평균수요_m3']+'㎥ (변동 계수 '+m['수요변동계수']+'). 기상청 ASOS 서울 2025년 강우로 계산한 값입니다.';
+  $('facInfo').textContent='가상 시설 · 지붕 '+fmt(m['지붕면적_m2'])+'㎡ · 저류조 '+m['저류조_m3']+'㎥ · 하루 수요 '+m['하루평균수요_m3']+'㎥ (서울 2025 강우)';
   levelChart();monthChart();
   var ms=DEMO.monthly[state.sc],st=monthStatus(state.sc);
   $('monthBadges').innerHTML=ms.map(function(x,i){return '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #eef2f7"><span>'+x.month+'월 <span class="note">'+(x.ratio==null?'':'기대치의 '+Math.round(x.ratio*100)+'%')+'</span></span>'+badge(st[i])+'</div>'}).join('');
@@ -187,7 +187,7 @@ function renderDetail(){
   $('alerts').innerHTML=al;
 }
 function renderSimTable(){
-  var t='<tr><th>경보 기준<br><span class="note" style="color:#cfdcec">(정상 월 하위 %)</span></th><th class="n">기준 비율</th><th class="n">정상 월 오경보</th><th class="n">2개월 연속 규칙 오경보</th><th class="n">사용 중단 탐지</th><th class="n">수요 반감 탐지</th><th class="n">누수 0.5㎥/일</th><th class="n">누수 1.0㎥/일</th></tr>';
+  var t='<tr><th>경보 기준<br><span class="note" style="color:#6d8aa8">(정상 월 하위 %)</span></th><th class="n">기준 비율</th><th class="n">정상 월 오경보</th><th class="n">2개월 연속 규칙 오경보</th><th class="n">사용 중단 탐지</th><th class="n">수요 반감 탐지</th><th class="n">누수 0.5㎥/일</th><th class="n">누수 1.0㎥/일</th></tr>';
   SIM.detection_by_threshold.forEach(function(d){t+='<tr'+(d.threshold_pct===5?' class="hl"':'')+'><td>'+d.threshold_pct+'%'+(d.threshold_pct===5?' (시연에 사용)':'')+'</td><td class="n">'+d.cutoff_ratio+'</td><td class="n">'+d.false_alarm_pct+'%</td><td class="n">'+d.false_alarm_2month_rule_pct+'%</td><td class="n">'+d.stop+'%</td><td class="n">'+d.half+'%</td><td class="n">'+d['leak_0.5']+'%</td><td class="n">'+d['leak_1.0']+'%</td></tr>'});
   $('detTable').innerHTML=t;
   $('simLimits').innerHTML=SIM.limits.map(function(x){return '<li>'+x+'</li>'}).join('')+'<li>탐지율은 난수에 따라 달라집니다(수요 반감 91~95%, 누수 약 23~41%).</li>';
@@ -226,7 +226,7 @@ function renderInspect(){
   for(var m=1;m<=12;m++){
     var x=ms.filter(function(a){return a.month===m})[0];
     if(x){tot+=x.actual_m3;t+='<tr><td>'+m+'월</td><td class="n">'+fmt(x.actual_m3,1)+'</td><td class="n">'+fmt(x.expected_m3,1)+'</td><td>'+badge(st[m-5])+'</td></tr>'}
-    else t+='<tr><td>'+m+'월</td><td class="n">—</td><td class="n">—</td><td class="note">시연 데이터 없음 (실제 운영에서는 센서가 자동 기록)</td></tr>';
+    else t+='<tr><td>'+m+'월</td><td class="n">—</td><td class="n">—</td><td class="note">—</td></tr>';
   }
   t+='<tr><td><b>합계</b></td><td class="n"><b>'+fmt(tot,1)+'</b></td><td></td><td></td></tr>';
   $('insTable').innerHTML=t;
@@ -239,7 +239,7 @@ function renderOp(){
   var inflow=rain/1000*area*0.85,free=tank*(1-lv/100),stored=tank*lv/100,over=inflow-free;
   var h='<h3>판단</h3><div class="grid g3" style="margin:8px 0"><div class="card soft stat navy"><b>'+fmt(inflow,1)+'㎥</b><span>예상 유입량</span></div><div class="card soft stat navy"><b>'+fmt(free,1)+'㎥</b><span>여유 용량</span></div><div class="card soft stat navy"><b>'+fmt(stored,1)+'㎥</b><span>현재 저장량'+(use>0?' ('+fmt(stored/use,1)+'일치)':'')+'</span></div></div>';
   if(over<=0)h+='<div class="box ok"><b>예보 강수를 저류조가 모두 받을 수 있습니다.</b> 예상 유입량이 여유 용량 이하입니다.</div>';
-  else h+='<div class="box warn"><b>예상 유입량이 여유 용량을 '+fmt(over,1)+'㎥ 초과합니다.</b> 넘치는 물은 하수로 흘러갑니다. 사전 방류로 여유를 만들 수 있지만, 시뮬레이션에서는 총 이용량을 늘리지 못했고 하수·침수 부담을 줄이는 효과로 설명해야 합니다.</div>';
+  else h+='<div class="box warn"><b>예상 유입량이 여유 용량을 '+fmt(over,1)+'㎥ 초과합니다.</b> 넘치는 물은 하수로 흘러갑니다. 사전 방류로 여유 용량을 미리 만들 수 있습니다.</div>';
   if(use===0)h+='<p class="note" style="margin-top:8px">하루 사용량이 0이면 빗물이 쓰이지 않는 상태입니다. 사용 중단 여부를 확인하세요.</p>';
   $('opOut').innerHTML=h;
 }
@@ -257,7 +257,7 @@ function renderBiz(){
 
 /* ---------- ESG ---------- */
 function renderEsg(){
-  var E=R.esg,cols={E:'#2e8b57',S:'#2e75b6',G:'#1b3a5c'},names={E:'E 환경',S:'S 사회',G:'G 지배구조'};
+  var E=R.esg,cols={E:'#3fb6a8',S:'#3a8fd8',G:'#1b3a5c'},names={E:'E 환경',S:'S 사회',G:'G 지배구조'};
   $('esgCards').innerHTML=['E','S','G'].map(function(k){return '<div class="card"><h3 style="color:'+cols[k]+'">'+names[k]+'</h3><p>'+E[k]['서비스']+'</p><p class="note"><b>KPI</b> '+E[k]['KPI'].join(' · ')+'</p></div>'}).join('');
   seg('esgScSeg',scItems(),state.sc,setSc);
   var ms=DEMO.monthly[state.sc],st=monthStatus(state.sc),act=0,exp=0;
