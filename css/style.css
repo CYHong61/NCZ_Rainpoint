@@ -92,3 +92,195 @@ footer hr{border:0;border-top:1px solid var(--line);margin:0 0 14px}
 .sq.ok{background:#8fd0a8}.sq.warn{background:#f2c46d}.sq.bad{background:#d9675b}
 @media(max-width:700px){.roles{grid-template-columns:1fr}.role{margin-left:0}}
 @media print{header.top,footer,.noprint,nav{display:none!important}.tab{display:none!important}.tab.printing{display:block!important}body{background:#fff}main{padding:0}th{background:#ddd!important;color:#000!important}}
+
+
+/* 헤더·로고·하위 메뉴 */
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff;cursor:pointer}
+.brand .wm{display:flex;flex-direction:column;line-height:1.05}
+.brand .wm b{font-size:18px;font-weight:800;letter-spacing:-.4px}
+.brand .wm small{font-size:9.5px;letter-spacing:2.6px;opacity:.7;margin:2px 0 0;font-weight:600}
+nav{margin-left:auto}
+nav button{font-size:15px;padding:8px 16px;font-weight:600}
+.subbar{display:none;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:15}
+.sub-in{max-width:1120px;margin:0 auto;padding:8px 20px;display:flex;gap:6px;flex-wrap:wrap}
+.sub-in button{background:var(--soft);border:0;color:var(--navy);padding:7px 14px;border-radius:999px;font:inherit;font-size:13.5px;cursor:pointer}
+.sub-in button.on{background:var(--navy);color:#fff;font-weight:700}
+.sub-in button:hover:not(.on){background:#dde8f5}
+/* 첫 화면(랜딩) */
+.landing{position:relative;overflow:hidden;border-radius:22px;background:linear-gradient(160deg,#102a47 0%,#1b3a5c 45%,#2e75b6 100%);color:#fff;padding:64px 28px 56px;text-align:center}
+.land-in{position:relative;z-index:2;max-width:760px;margin:0 auto}
+.biglogo{display:inline-flex;align-items:center;gap:16px;margin-bottom:22px;text-align:left}
+.biglogo b{display:block;font-size:34px;font-weight:800;letter-spacing:-.8px;line-height:1.05}
+.biglogo small{display:block;font-size:12px;letter-spacing:5px;opacity:.75;font-weight:600;margin-top:4px}
+.landing h1{color:#fff;font-size:40px;margin:6px 0 14px}
+.landing .lead{color:#d6e6f7;margin:0 auto 26px;max-width:640px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cbtn{border:0;border-radius:999px;padding:14px 26px;font:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s,filter .15s}
+.cbtn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+.cbtn.gov{background:#fff;color:var(--navy)}
+.cbtn.adm{background:var(--org);color:#fff}
+.cbtn.ghost{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55)}
+.land-note{margin:26px 0 0;font-size:12.5px;color:#a9c4e0}
+.rain i{position:absolute;top:-30px;width:2px;height:26px;border-radius:2px;background:linear-gradient(to bottom,rgba(180,220,255,0),rgba(180,220,255,.8));animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(520px)}}
+.ripples span{position:absolute;left:50%;bottom:-120px;width:180px;height:180px;margin-left:-90px;border-radius:50%;border:2px solid rgba(160,210,255,.45);animation:rip 5s ease-out infinite}
+.ripples span:nth-child(2){animation-delay:1.7s}.ripples span:nth-child(3){animation-delay:3.4s}
+@keyframes rip{0%{transform:scale(.3);opacity:.9}100%{transform:scale(4.2);opacity:0}}
+@media(prefers-reduced-motion:reduce){.rain i,.ripples span{animation:none}}
+.ctr{text-align:center}
+.who .whocard{text-align:left;background:#fff;border:1px solid var(--line);border-top:5px solid var(--navy);border-radius:14px;padding:18px 20px;cursor:pointer;font:inherit;color:var(--ink);transition:transform .15s,box-shadow .15s}
+.who .whocard.gv{border-top-color:var(--mid)}.who .whocard.ab{border-top-color:var(--green)}
+.who .whocard:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(27,58,92,.14)}
+.whocard .wk{font-size:12px;font-weight:700;color:var(--mid)}
+.whocard b{display:block;font-size:18px;color:var(--navy);margin:4px 0 6px}
+.whocard p{margin:0 0 10px;font-size:13.5px;color:var(--grey)}
+.whocard em{font-style:normal;font-weight:700;color:var(--navy);font-size:13.5px}
+@media(max-width:860px){.landing{padding:40px 16px 36px}.landing h1{font-size:27px}.biglogo b{font-size:26px}.nav button{padding:7px 10px}}
+.who{align-items:stretch}.who .whocard{display:flex;flex-direction:column}.whocard em{margin-top:auto}
+
+/* 구조도 중심 첫 화면 */
+.landing2{background:linear-gradient(180deg,#eaf3fc 0%,#ffffff 70%);border:1px solid var(--line);border-radius:22px;padding:40px 30px 30px;text-align:center}
+.landing2 .biglogo{margin-bottom:14px}
+.landing2 .biglogo b{color:var(--navy)}.landing2 .biglogo small{color:var(--mid);opacity:1}
+.landing2 h1{font-size:38px;margin:6px 0 10px}
+.landing2 .lead{margin:0 auto 22px;max-width:660px}
+.diagwrap{margin:0 auto 22px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 10px 30px rgba(27,58,92,.10)}
+.diagwrap svg.diag{width:100%;height:auto;display:block;border-radius:12px}
+.diagwrap svg.diag text{font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.diagwrap figcaption{font-size:12.5px;color:var(--grey);margin:8px 4px 2px;text-align:left}
+.landing2 .cbtn.gov{background:var(--navy);color:#fff}
+.landing2 .cbtn.ghost{color:var(--navy);border-color:var(--navy)}
+.landing2 .land-note{color:var(--grey)}
+@media(max-width:860px){.landing2{padding:24px 12px 20px}.landing2 h1{font-size:26px}}
+
+/* 밝은 헤더 + 이미지 첫 화면 */
+header.top{background:#fff;color:var(--navy);border-bottom:1px solid var(--line);box-shadow:0 2px 10px rgba(27,58,92,.06)}
+.brand{color:var(--navy)}
+.brand-logo{height:44px;width:auto;display:block}
+.brand .wm small{color:var(--mid);opacity:1}
+nav button{color:var(--grey)}
+nav button:hover{background:var(--soft);color:var(--navy)}
+nav button.on{background:var(--navy);color:#fff}
+.subbar{top:64px}
+.heroimg{text-align:center}
+.heroimg img{width:100%;height:auto;display:block;border-radius:22px;box-shadow:0 12px 36px rgba(27,58,92,.14);border:1px solid var(--line);background:#fff}
+.heroimg .cta{margin-top:22px}
+.heroimg .cbtn.gov{background:var(--navy);color:#fff}
+.heroimg .cbtn.ghost{color:var(--navy);border-color:var(--navy)}
+.heroimg .land-note{color:var(--grey)}
+
+/* ===== 디자인 다듬기 ===== */
+body{background:#fff}
+body::before{content:"";position:absolute;left:0;right:0;top:0;height:760px;background:radial-gradient(1200px 520px at 50% 0,#e3f1ff 0%,#f4faff 55%,#fff 100%);z-index:-1}
+.top-in{padding:8px 20px}
+.brand{gap:12px}
+.brand-logo{height:46px}
+.brand .wm b{font-size:23px;font-weight:800;letter-spacing:-.6px;color:var(--navy);font-family:"Segoe UI","Helvetica Neue",Arial,"Pretendard","Malgun Gothic",sans-serif}
+.brand .wm small{font-size:11px;letter-spacing:-.1px;margin-top:3px;color:var(--mid);font-weight:600}
+nav{gap:4px}
+nav button{border-radius:999px;font-size:15px;padding:9px 20px;font-weight:600;color:#4a5a6b}
+nav button:hover{background:#eaf3fc;color:var(--navy)}
+nav button.on{background:linear-gradient(135deg,#1b3a5c,#2e75b6);color:#fff;box-shadow:0 4px 12px rgba(46,117,182,.35)}
+.subbar{background:rgba(255,255,255,.92);backdrop-filter:blur(6px)}
+.heroimg img{border:0;border-radius:26px;box-shadow:0 18px 50px rgba(46,117,182,.22)}
+.heroimg .cta{margin-top:26px;gap:14px}
+.cbtn{font-size:17px;padding:16px 32px;box-shadow:0 8px 20px rgba(27,58,92,.18)}
+.heroimg .cbtn.gov{background:linear-gradient(135deg,#1b3a5c,#2e75b6)}
+.heroimg .cbtn.adm{background:linear-gradient(135deg,#e07b39,#d96c2b)}
+.heroimg .cbtn.ghost{background:#fff;box-shadow:none}
+.sechead{text-align:center;margin:56px 0 18px}
+.sechead span{display:block;font-size:12px;font-weight:800;letter-spacing:3px;color:var(--mid)}
+.sechead h2{margin:6px 0 0;font-size:26px}
+.sechead h2::after{content:"";display:block;width:36px;height:4px;border-radius:2px;background:linear-gradient(90deg,#2e75b6,#7fc4f5);margin:12px auto 0}
+.steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.st{background:#fff;border:1px solid #e3ecf6;border-radius:18px;padding:22px 20px;box-shadow:0 8px 24px rgba(27,58,92,.06);text-align:left}
+.st em{display:block;font-style:normal;font-size:11px;font-weight:800;letter-spacing:2px;color:var(--mid);margin-top:14px}
+.st b{display:block;font-size:20px;color:var(--navy);margin:2px 0 6px}
+.st p{margin:0;font-size:13.5px;color:var(--grey)}
+.ico{display:inline-flex;width:50px;height:50px;border-radius:15px;align-items:center;justify-content:center;color:#fff;font-style:normal}
+.c1{background:linear-gradient(135deg,#1b3a5c,#2e75b6)}.c2{background:linear-gradient(135deg,#2e75b6,#6fb6ee)}.c3{background:linear-gradient(135deg,#2e8b57,#6cc08d)}.c4{background:linear-gradient(135deg,#d96c2b,#f0a15f)}
+.who .whocard{border:1px solid #e3ecf6;border-top:1px solid #e3ecf6;border-radius:18px;padding:24px 22px;box-shadow:0 8px 24px rgba(27,58,92,.06)}
+.who .whocard.gv,.who .whocard.ab{border-top:1px solid #e3ecf6}
+.whocard .ico{margin-bottom:14px}
+.whocard .wk{font-size:12px;font-weight:800;letter-spacing:1px}
+footer{margin-top:50px;background:#12283f;color:#b9c8d8;padding:26px 20px 34px;border-radius:0}
+footer hr{display:none}
+footer p{max-width:1080px;margin:8px auto;font-size:12.5px}
+footer b{color:#fff}
+@media(max-width:860px){.steps4{grid-template-columns:1fr 1fr}.brand .wm small{display:none}}
+footer{max-width:none;width:100%}
+
+.heroh{text-align:center;margin:10px auto 22px;max-width:860px}
+.heroh h1{font-size:44px;line-height:1.25;margin:0 0 12px;color:var(--navy);letter-spacing:-1.2px}
+.heroh .hl{background:linear-gradient(135deg,#1b6fc2,#35a0ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.heroh .lead{margin:0 auto;color:#4a5a6b}
+.herofig{border-radius:30px;box-shadow:0 18px 50px rgba(46,117,182,.22);overflow:hidden}
+.herofig svg{display:block;width:100%;height:auto}
+.herofig svg text{font-family:"Pretendard","Malgun Gothic","Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+.herofig svg text[font-size="46"]{font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+@media(max-width:860px){.heroh h1{font-size:28px}}
+
+/* 헤드라인 + 마스코트 */
+.heroh2{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1040px;margin:6px auto 24px}
+.heroh2 .ht{text-align:left}
+.heroh2 h1{font-size:44px;line-height:1.25;margin:0 0 12px;color:var(--navy);letter-spacing:-1.2px}
+.heroh2 .hl{background:linear-gradient(135deg,#1b6fc2,#35a0ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.heroh2 .lead{margin:0;color:#4a5a6b}
+.mascot{position:relative;flex:0 0 auto;display:flex;flex-direction:column;align-items:center}
+.mascot img{width:190px;height:auto;display:block;filter:drop-shadow(0 10px 14px rgba(46,117,182,.25));animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.bubble{position:relative;background:#fff;border:2px solid #cfe3f7;color:var(--navy);font-weight:700;font-size:14px;line-height:1.4;padding:10px 16px;border-radius:18px;margin-bottom:12px;text-align:center;box-shadow:0 6px 16px rgba(46,117,182,.14)}
+.bubble::after{content:"";position:absolute;left:50%;bottom:-9px;width:14px;height:14px;background:#fff;border-right:2px solid #cfe3f7;border-bottom:2px solid #cfe3f7;transform:translateX(-50%) rotate(45deg)}
+.herobig{width:100%;height:auto;display:block;border-radius:26px;box-shadow:0 18px 50px rgba(46,117,182,.22)}
+@media(prefers-reduced-motion:reduce){.mascot img{animation:none}}
+@media(max-width:860px){.heroh2{flex-direction:column;text-align:center}.heroh2 .ht{text-align:center}.heroh2 h1{font-size:28px}.mascot img{width:130px}}
+.heroimg .mascot img{border-radius:0;box-shadow:none;background:none;border:0}
+
+/* ===== 홈 재배치 ===== */
+main{padding-bottom:70px}
+.heroh2{max-width:1120px;margin:18px auto 34px;gap:30px;align-items:center}
+.heroh2 .ht{flex:1 1 auto;padding-left:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #d6e7f7;border-radius:999px;padding:6px 16px 6px 8px;box-shadow:0 4px 12px rgba(46,117,182,.10);margin-bottom:20px}
+.pill img{width:26px;height:26px;border-radius:0!important;box-shadow:none!important;border:0!important;background:none!important}
+.pill span{font-weight:800;color:var(--mid);font-size:14px;letter-spacing:-.2px;font-family:"Segoe UI","Helvetica Neue",Arial,sans-serif}
+.heroh2 h1{font-size:50px;line-height:1.22;margin:0 0 16px}
+.heroh2 .lead{font-size:18px;margin:0 0 26px}
+.cta2{display:flex;gap:12px;flex-wrap:wrap}
+.cta2 .cbtn{font-size:16px;padding:15px 28px}
+.cta2 .cbtn.gov{background:linear-gradient(135deg,#1b3a5c,#2e75b6);color:#fff}
+.cta2 .cbtn.adm{background:linear-gradient(135deg,#e07b39,#d96c2b);color:#fff}
+.textlink{background:none;border:0;font:inherit;font-weight:700;color:var(--mid);margin-top:16px;cursor:pointer;padding:4px 2px}
+.textlink:hover{text-decoration:underline}
+.heroh2 .mascot{flex:0 0 360px;height:380px;justify-content:flex-end}
+.mascot .blob{position:absolute;left:50%;bottom:8px;width:330px;height:330px;margin-left:-165px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#ffffff 0%,#d9ecff 55%,#bcdcfa 100%);z-index:0}
+.heroh2 .mascot img{position:relative;z-index:1;width:250px;margin-bottom:22px}
+.mascot .bubble{position:relative;z-index:2;margin-bottom:14px}
+.mascot .dp{position:absolute;z-index:0;background:linear-gradient(160deg,#9fd0f7,#4a9be0);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;opacity:.8}
+.dp.d1{width:16px;height:22px;left:18px;top:120px}.dp.d2{width:11px;height:15px;right:14px;top:170px}.dp.d3{width:13px;height:18px;left:34px;bottom:70px}
+.herobig{border-radius:28px;box-shadow:0 22px 60px rgba(46,117,182,.25);margin-top:6px}
+@media(max-width:900px){.heroh2{flex-direction:column;text-align:center}.heroh2 .ht{padding:0}.heroh2 h1{font-size:30px}.cta2{justify-content:center}.heroh2 .mascot{flex:none;width:300px;height:340px}}
+
+/* ESG 카드 */
+.figwrap{position:relative;margin-bottom:10px}
+.figwrap .herobig{display:block;width:100%}
+.esgrow{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:-64px 28px 0}
+.esgc{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid #e3ecf6;border-radius:18px;padding:18px 18px;box-shadow:0 14px 34px rgba(27,58,92,.16)}
+.esgc .ico{flex:0 0 50px}
+.esgc b{display:block;font-size:17px;color:var(--navy);margin-bottom:3px}
+.esgc p{margin:0;font-size:13.5px;color:var(--grey);line-height:1.5}
+@media(max-width:860px){.esgrow{grid-template-columns:1fr;margin:-30px 12px 0}}
+.esgrow{margin:-26px 36px 0;text-align:left}
+.esgc{text-align:left}
+
+.cloud{position:absolute;z-index:3;right:-70px;top:4px;width:250px;height:146px;filter:drop-shadow(0 8px 14px rgba(46,117,182,.18));animation:bob 3.6s ease-in-out infinite}
+.cloud .cloudsvg{position:absolute;inset:0;width:100%;height:100%}
+.cloud span{position:absolute;left:0;right:0;top:46px;text-align:center;font-weight:800;font-size:13.5px;line-height:1.4;color:var(--navy)}
+@media(prefers-reduced-motion:reduce){.cloud{animation:none}}
+@media(max-width:900px){.cloud{right:-20px;top:-6px;width:210px;height:123px}.cloud span{top:38px;font-size:12px}}
+.cloud{right:-120px;top:-8px}@media(max-width:900px){.cloud{right:-20px;top:-6px}}
+
+.cta2 .cbtn.gov{background:linear-gradient(135deg,#1b3a5c,#2e75b6);box-shadow:0 10px 22px rgba(27,58,92,.22)}
+.cta2 .cbtn.adm{background:linear-gradient(135deg,#4fb0ea,#2e86d4);box-shadow:0 10px 22px rgba(46,134,212,.28)}
+.cta2 .cbtn{transition:transform .15s}.cta2 .cbtn:hover{transform:translateY(-2px)}
+.textlink.pilllink{display:inline-block;margin:2px 0 16px;padding:8px 18px;border-radius:999px;background:#fff;border:1.5px solid #cfe3f7;color:var(--mid);box-shadow:0 4px 12px rgba(46,117,182,.10);text-decoration:none}
+.textlink.pilllink:hover{background:#eaf3fc;text-decoration:none}

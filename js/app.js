@@ -6,41 +6,36 @@ var fmt=function(n,d){return Number(n).toLocaleString('ko-KR',{maximumFractionDi
 var SCN={normal:'정상',stop:'사용 중단 (7월~)',half:'수요 반감 (7월~)',leak1:'누수 1.0㎥/일'};
 var SCC={normal:'#2e75b6',stop:'#c0392b',half:'#d96c2b',leak1:'#7a4fb5'};
 var THR=DEMO.meta['경보기준_월사용량_대비_기대치'];
-var state={sc:'normal',recMonth:7,gu:'전체',dong:null,role:'admin',fleetF:'전체'};
+var state={sc:'normal',recMonth:7,gu:'전체',dong:null,fleetF:'전체'};
 
 /* ---------- 역할별 화면(모듈) ----------
    MODULES에 탭 이름을 넣거나 빼면 대상별 메뉴가 바뀝니다. */
-var TABNAME={home:'홈',fleet:'관할 시설 현황',map:'시설 지도',detail:'시설 상세·이상 진단',record:'법정 기록',inspect:'점검표',operate:'운영 추천',biz:'서비스·사업 구조',esg:'ESG 리포트'};
-var MODULES={
-  admin:{label:'시설 관리자',tabs:['home','detail','record','operate','esg','biz']},
-  gov:{label:'지자체',tabs:['home','fleet','map','inspect','biz']}
-};
+var TABNAME={home:'홈',intro:'문제와 해결',biz:'서비스·사업 구조',fleet:'관할 시설 현황',map:'시설 지도',inspect:'점검표',detail:'시설 상세·이상 진단',record:'법정 기록',operate:'운영 추천',esg:'ESG 리포트'};
+var GROUPS=[
+  {id:'home',label:'홈',tabs:['home']},
+  {id:'about',label:'사업 소개',tabs:['intro','biz']},
+  {id:'gov',label:'지자체용',tabs:['fleet','map','inspect']},
+  {id:'admin',label:'관리자용',tabs:['detail','record','operate','esg']}
+];
 var tabs=Object.keys(TABNAME);
-function roleFor(t){
-  if(MODULES[state.role].tabs.indexOf(t)>=0)return state.role;
-  return MODULES.admin.tabs.indexOf(t)>=0?'admin':'gov';
-}
-function buildNav(){
+function groupFor(t){for(var i=0;i<GROUPS.length;i++)if(GROUPS[i].tabs.indexOf(t)>=0)return GROUPS[i];return GROUPS[0]}
+function buildNav(g){
   var n=$('nav');n.innerHTML='';
-  MODULES[state.role].tabs.forEach(function(t){var b=document.createElement('button');b.dataset.go=t;b.textContent=TABNAME[t];n.appendChild(b)});
-  seg('roleSeg',Object.keys(MODULES).map(function(k){return [k,MODULES[k].label+'용']}),state.role,function(r){setRole(r)});
+  GROUPS.forEach(function(x){var b=document.createElement('button');b.dataset.go=x.tabs[0];b.dataset.group=x.id;b.textContent=x.label;if(x.id===g.id)b.className='on';n.appendChild(b)});
+  var s=$('subnav'),bar=$('subbar');s.innerHTML='';
+  if(g.tabs.length>1){bar.style.display='block';g.tabs.forEach(function(t){var b=document.createElement('button');b.dataset.go=t;b.textContent=TABNAME[t];if(t===cur)b.className='on';s.appendChild(b)})}
+  else bar.style.display='none';
 }
-function setRole(r,target){
-  state.role=r;buildNav();
-  go(target&&MODULES[r].tabs.indexOf(target)>=0?target:(MODULES[r].tabs.indexOf(cur)>=0?cur:(r==='gov'?'fleet':'detail')));
-}
+function setRole(r,target){go(target||(r==='gov'?'fleet':'detail'))}
 var cur='home';
 function go(t){
   if(tabs.indexOf(t)<0)t='home';
-  var r=roleFor(t);if(r!==state.role){state.role=r;buildNav()}
-  cur=t;
+  cur=t;buildNav(groupFor(t));
   tabs.forEach(function(x){$('tab-'+x).classList.toggle('on',x===t)});
-  document.querySelectorAll('#nav button').forEach(function(b){b.classList.toggle('on',b.dataset.go===t)});
   if(location.hash!=='#'+t)history.replaceState(null,'','#'+t);
   window.scrollTo(0,0);
 }
 document.addEventListener('click',function(e){
-  var rc=e.target.closest('[data-role]');if(rc){setRole(rc.dataset.role,rc.dataset.role==='gov'?'fleet':'detail');return}
   var g=e.target.closest('[data-go]');if(g){go(g.dataset.go)}
 });
 
@@ -69,11 +64,11 @@ function scItems(){return Object.keys(SCN).map(function(k){return [k,SCN[k]]})}
 function renderHome(){
   var ids=['unknown2021','unmeasured2016','unused_apt','seongnam146'],ps={};
   F.problem_stats.forEach(function(p){ps[p.id]=p});
-  var labels={unknown2021:'2021년 전국 3,175곳 중 사용량을 파악하지 못한 시설',unmeasured2016:'2016년 전국 2,043곳 중 연간 사용량 미집계',unused_apt:'공동주택 시설 중 빗물을 쓰지 않는 비율(약, 2016)',seongnam146:'성남시 한 곳만의 2026년 점검 대상 빗물이용시설'};
+  var labels={unknown2021:'2021년 전국 3,176곳 중 연간 사용량 0으로 기록된 시설',unmeasured2016:'2016년 전국 2,043곳 중 연간 사용량 미집계',unused_apt:'공동주택 시설 중 빗물을 쓰지 않는 비율(약, 2016)',seongnam146:'성남시 한 곳만의 2026년 점검 대상 빗물이용시설'};
   var h='';
   ids.forEach(function(id,i){var p=ps[id];h+='<div class="card stat'+(i===3?' navy':'')+'"><b>'+fmt(p.value)+p.unit+'</b><span>'+labels[id]+'</span>'+(p.status!=='확인'?'<em>원 출처 확인 중</em>':'')+'</div>'});
   $('homeStats').innerHTML=h;
-  $('homeStatNote').textContent='출처: 환경부 하수도 통계(2016)·한국건설기술연구원 외(2022), 성남시 2026 과업지시서. 2021·2022 시설 수는 팀 정리 자료이며 원 출처를 확인 중입니다. 쓰지 않는 이유 1위는 "필요할 때 저류조 물이 부족", 2위는 "운영비 부담"입니다.';
+  $('homeStatNote').textContent='출처: 환경부 하수도 통계(2016)·한국건설기술연구원 외(2022), 성남시 2026 과업지시서. 2021·2022 시설 수는 환경부 하수도통계 10-3 빗물이용시설현황 시설별 자료를 직접 집계한 값입니다. 쓰지 않는 이유 1위는 "필요할 때 저류조 물이 부족", 2위는 "운영비 부담"입니다.';
   var t='<tr><th>법이 요구하는 것</th><th>우리 서비스가 하는 일</th><th>확인 수준</th></tr>';
   t+='<tr><td>빗물 사용량 기록 (물 재이용법 시행규칙)</td><td>센서로 자동 기록해 3년 보존. 전자적 방법으로 기록·보존할 수 있음</td><td>원문 확인(국회법률정보시스템)</td></tr>';
   t+='<tr><td>누수·점검·청소 기록</td><td>이상 진단으로 의심 구간을 표시, 점검·청소 날짜는 담당자가 입력</td><td>센서만으로 대체되지 않음</td></tr>';
@@ -257,7 +252,7 @@ function renderBiz(){
    ['시설 소유자의 유지관리 지출','수원시 도서관사업소: '+o['수원시도서관사업소']],
    ['중수도 위탁관리 (DDP)',o['DDP']]
   ].map(function(c){return '<div class="card"><h3>'+c[0]+'</h3><p style="font-size:13.5px">'+c[1]+'</p></div>'}).join('');
-  $('unknownList').innerHTML=['실측 자료와 고객 지불 의사·단가','2022년 전국 시설 수(3,429곳)의 원 출처','업무지침(2024.11) 원문','법정·비법정 시설 모두에 기록 의무가 적용되는지','서울시 설치비 지원의 센서 포함 여부','과태료 실제 부과 사례','국내 센서 실제 견적(원격검침 계량기 포함)','센서 오차·통신 두절을 반영한 오경보율'].map(function(x){return '<li>'+x+'</li>'}).join('');
+  $('unknownList').innerHTML=['실측 자료와 고객 지불 의사·단가','업무지침(2024.11) 원문','법정·비법정 시설 모두에 기록 의무가 적용되는지','서울시 설치비 지원의 센서 포함 여부','과태료 실제 부과 사례','국내 센서 실제 견적(원격검침 계량기 포함)','센서 오차·통신 두절을 반영한 오경보율'].map(function(x){return '<li>'+x+'</li>'}).join('');
 }
 
 /* ---------- ESG ---------- */
@@ -337,7 +332,7 @@ $('ntSend').onclick=function(){$('ntDone').textContent='시연: '+$('ntTo').valu
 $('ntClose').onclick=function(){$('notifyBox').style.display='none'};
 $('printRec').onclick=function(){printTab('tab-record')};
 $('printIns').onclick=function(){printTab('tab-inspect')};
-buildNav();renderFleet();renderHome();renderMap();renderSc();renderSimTable();renderOp();rainChart();renderBiz();
+renderFleet();renderHome();renderMap();renderSc();renderSimTable();renderOp();rainChart();renderBiz();
 window.addEventListener('hashchange',function(){go(location.hash.slice(1))});
 go(location.hash.slice(1)||'home');
 })();
