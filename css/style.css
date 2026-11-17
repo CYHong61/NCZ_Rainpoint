@@ -330,3 +330,58 @@ html,body{overflow-x:hidden}
 .road .stage h3{margin:6px 0}
 @media(max-width:700px){.ph .phimg{height:90px}}
 .ph{margin-bottom:16px}.ph .phimg{margin-bottom:0}
+.stat span{word-break:keep-all}
+
+/* ===== 모바일(폰) 전용 ===== */
+@media(max-width:700px){
+  body{font-size:15px;padding-bottom:78px;word-break:keep-all;overflow-wrap:break-word}
+  h1,h2,h3,.heroh2 h1{word-break:keep-all}
+  h1{font-size:23px!important;line-height:1.35}
+  h2{font-size:19px}
+  main{padding:14px 12px 30px}
+  .top-in{padding:8px 14px;gap:8px}
+  .brand .wm small{display:none}
+  .brand-logo{height:34px}
+  /* 하단 고정 탭바 */
+  nav#nav{position:fixed;left:0;right:0;bottom:0;z-index:40;margin:0;gap:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -4px 16px rgba(27,58,92,.12);padding:6px 8px calc(6px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(4,1fr);flex-wrap:nowrap}
+  nav#nav button{border-radius:12px;padding:10px 2px;font-size:14px;font-weight:700;color:#4a5a6b;background:none;box-shadow:none;min-height:46px}
+  nav#nav button.on{background:linear-gradient(135deg,#1b3a5c,#2e75b6);color:#fff;box-shadow:0 3px 10px rgba(46,117,182,.35)}
+  /* 상단 소메뉴: 한 줄 가로 스크롤 */
+  .subbar{top:50px}
+  .sub-in,#subnav{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  #subnav::-webkit-scrollbar{display:none}
+  #subnav button{flex:none;white-space:nowrap}
+  /* 카드·통계 */
+  .g4,.steps4,.flow{grid-template-columns:1fr 1fr}
+  .stat b{font-size:26px}
+  .stat span{font-size:12.5px}
+  /* 시연 시나리오 버튼 */
+  .seg{overflow-x:auto;flex-wrap:nowrap;max-width:100%;padding-bottom:4px}
+  .seg button{flex:none;white-space:nowrap;padding:9px 14px}
+  /* 지자체 시설 표 → 카드 */
+  #fleetTable,#fleetTable tbody{display:block;width:100%}
+  #fleetTable tr:first-child{display:none}
+  #fleetTable tr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px}
+  #fleetTable td{border:0;padding:0;background:none}
+  #fleetTable .c-rk{order:0;width:22px;height:22px;border-radius:50%;background:var(--soft);color:var(--navy);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  #fleetTable .c-nm{order:1;flex:1;font-weight:700;font-size:16px;color:var(--navy)}
+  #fleetTable .c-bd{order:2}
+  #fleetTable .c-gu,#fleetTable .c-kd,#fleetTable .c-mt{order:3;font-size:12.5px;color:var(--grey)}
+  #fleetTable .c-gu::after,#fleetTable .c-kd::after{content:" ·";margin-left:6px}
+  #fleetTable .c-mt::before{content:"유량계 "}
+  #fleetTable .c-sq{order:4;width:100%;display:flex;gap:4px;align-items:center}
+  #fleetTable .c-sq .sq{flex:1;max-width:34px;height:14px}
+  #fleetTable .c-rt{order:5;width:100%;text-align:left!important;font-size:13px;color:var(--ink)}
+  #fleetTable .c-rt::before{content:"10월 기대 대비 ";color:var(--grey)}
+  #fleetTable .c-a1,#fleetTable .c-a2{order:6;flex:1}
+  #fleetTable .c-a1 button,#fleetTable .c-a2 button{width:100%;padding:11px 10px!important;font-size:14px!important}
+  /* 일반 표는 가로 스크롤 */
+  .tw{-webkit-overflow-scrolling:touch}
+  table{font-size:13px}
+  /* 마스코트·말풍선 */
+  .heroh2 .mascot{width:100%;max-width:300px;height:auto}
+  .mascot img{width:150px}
+  input,select,textarea,button{font-size:16px}
+}
+@media(max-width:700px){#fleetTable .c-nm{white-space:nowrap;flex:1 1 auto}#fleetTable .c-gu,#fleetTable .c-kd,#fleetTable .c-mt{white-space:nowrap}}
+@media(max-width:700px){#fleetTable tr::after{content:"";order:2;width:100%;height:0}#fleetTable .c-nm{flex:1 1 40%}}

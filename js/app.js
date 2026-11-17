@@ -62,9 +62,9 @@ function scItems(){return Object.keys(SCN).map(function(k){return [k,SCN[k]]})}
 
 /* ---------- 홈 ---------- */
 function renderHome(){
-  var ids=['unknown2021','unmeasured2016','unused_apt','seongnam146'],ps={};
+  var ids=['unknown2022','unmeasured2016','unused_apt','seongnam146'],ps={};
   F.problem_stats.forEach(function(p){ps[p.id]=p});
-  var labels={unknown2021:'2021년 전국 3,176곳 중 연간 사용량 0으로 기록된 시설',unmeasured2016:'2016년 전국 2,043곳 중 연간 사용량 미집계',unused_apt:'공동주택 시설 중 빗물을 쓰지 않는 비율(약, 2016)',seongnam146:'성남시 한 곳만의 2026년 점검 대상 빗물이용시설'};
+  var labels={unknown2022:'2022년 전국 3,429곳 중 연간 사용량 0이거나 미기재인 시설(54.7%)',unmeasured2016:'2016년 전국 2,043곳 중 연간 사용량 미집계',unused_apt:'공동주택 시설 중 빗물을 쓰지 않는 비율(약, 2016)',seongnam146:'성남시 한 곳만의 2026년 점검 대상 빗물이용시설'};
   var h='';
   ids.forEach(function(id,i){var p=ps[id];h+='<div class="card stat'+(i===3?' navy':'')+'"><b>'+fmt(p.value)+p.unit+'</b><span>'+labels[id]+'</span>'+(p.status!=='확인'?'<em>원 출처 확인 중</em>':'')+'</div>'});
   $('homeStats').innerHTML=h;
@@ -306,7 +306,7 @@ function renderFleet(){
   rows.forEach(function(r){
     if(state.fleetF!=='전체'&&r.last==='정상')return;k++;
     var sq=r.st.map(function(s,j){return '<i class="sq '+({'정상':'ok','의심':'warn','이상':'bad'}[s])+'" title="'+(j+5)+'월 '+s+'"></i>'}).join('');
-    t+='<tr><td>'+k+'</td><td>'+r.name+'</td><td>'+r.gu+'</td><td>'+r.kind+'</td><td>'+r.meter+'</td><td>'+sq+'</td><td class="n">'+Math.round(r.ratio*100)+'%</td><td>'+badge(r.last)+'</td><td><button class="btn alt" style="padding:4px 10px;font-size:12.5px" data-fleet="'+r.sc+'">상세 보기</button></td><td>'+(r.last==='정상'?'':'<button class="btn" style="padding:4px 10px;font-size:12.5px" data-notify="'+r.name+'|'+r.last+'|'+Math.round(r.ratio*100)+'">점검 요청</button>')+'</td></tr>';
+    t+='<tr><td class="c-rk">'+k+'</td><td class="c-nm">'+r.name+'</td><td class="c-gu">'+r.gu+'</td><td class="c-kd">'+r.kind+'</td><td class="c-mt">'+r.meter+'</td><td class="c-sq">'+sq+'</td><td class="n c-rt">'+Math.round(r.ratio*100)+'%</td><td class="c-bd">'+badge(r.last)+'</td><td class="c-a1"><button class="btn alt" style="padding:4px 10px;font-size:12.5px" data-fleet="'+r.sc+'">상세 보기</button></td><td class="c-a2">'+(r.last==='정상'?'':'<button class="btn" style="padding:4px 10px;font-size:12.5px" data-notify="'+r.name+'|'+r.last+'|'+Math.round(r.ratio*100)+'">점검 요청</button>')+'</td></tr>';
   });
   $('fleetTable').innerHTML=t;
   $('fleetTable').querySelectorAll('[data-fleet]').forEach(function(b){b.onclick=function(){state.sc=b.dataset.fleet;renderSc();setRole('admin','detail')}});
